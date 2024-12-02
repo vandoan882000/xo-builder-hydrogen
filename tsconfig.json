@@ -1,0 +1,42 @@
+{
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.tsx"],
+  "exclude": ["node_modules", "dist", "playwright.config.ts"],
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "module": "ES2022",
+    "target": "ES2022",
+    "strict": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "types": ["@shopify/oxygen-workers-types"],
+    "noEmit": true,
+    "paths": {
+      "~/*": ["app/*"],
+      "@xotiny-private/react/*": [
+        "../../packages/react/src/*"
+      ],
+      "@xotiny-private/react": [
+        "../../packages/react/src/index"
+      ],
+      "@xotiny/xb-react-elements/*": [
+        "../../packages/xb-react-elements/src/*"
+      ],
+      "@xotiny/xb-react-elements": [
+        "../../packages/xb-react-elements/src/index"
+      ],
+      "@xotiny-private/utils/*": [
+        "../../packages/utils/src/*"
+      ],
+      "@xotiny-private/utils": [
+        "../../packages/utils/src/index"
+      ]
+    },
+  }
+}
