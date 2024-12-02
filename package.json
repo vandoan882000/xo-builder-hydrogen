@@ -39,9 +39,7 @@
     "schema-dts": "^1.1.0",
     "tiny-invariant": "^1.2.0",
     "typographic-base": "^1.0.4",
-    "@xotiny-private/react": "workspace:^",
-    "@xotiny-private/utils": "workspace:^",
-    "@xotiny/xb-react-elements": "workspace:^",
+    "@xotiny/xb-react-elements": "^1.0.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "use-sync-external-store": "^1.2.2"

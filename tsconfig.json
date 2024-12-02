@@ -31,12 +31,6 @@
       "@xotiny/xb-react-elements": [
         "../../packages/xb-react-elements/src/index"
       ],
-      "@xotiny-private/utils/*": [
-        "../../packages/utils/src/*"
-      ],
-      "@xotiny-private/utils": [
-        "../../packages/utils/src/index"
-      ]
     },
   }
 }
