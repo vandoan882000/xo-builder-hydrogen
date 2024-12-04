@@ -5,9 +5,8 @@ import {
   type LoaderFunctionArgs,
   type MetaArgs,
 } from '@shopify/remix-oxygen';
-import {XoBuilder} from '@xotiny/xb-react-elements/index';
 import invariant from 'tiny-invariant';
-
+import {XoBuilder} from '@xotiny/xb-react-elements';
 import {elements} from '~/config/elements';
 import {routeHeaders} from '~/data/cache';
 import {home_default} from '~/data/home';
