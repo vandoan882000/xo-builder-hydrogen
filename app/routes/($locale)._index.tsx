@@ -65,7 +65,7 @@ export default function Homepage() {
 
   return (
     <XoBuilder.Layout
-      isDev={process.env.NODE_ENV === 'development'}
+      isDev={true}
       elements={elements}
       page={pageData}
       shopifyData={shopifyData}
