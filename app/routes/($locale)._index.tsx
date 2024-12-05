@@ -3,7 +3,6 @@ import type {LoaderFunctionArgs} from '@remix-run/server-runtime';
 import {defer} from '@remix-run/server-runtime';
 import {getSeoMeta} from '@shopify/hydrogen';
 import {XoBuilder} from '@xotiny/xb-react-elements';
-
 import {elements} from '~/config/elements';
 import {home_default} from '~/data/home';
 import {seoPayload} from '~/lib/seo.server';
@@ -56,12 +55,7 @@ export const meta: MetaFunction<typeof loader> = (data) => {
 export default function Homepage() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
 
-  console.log(
-    pageData,
-    shopifyData,
-    process.env.NODE_ENV === 'development',
-    process.env.NODE_ENV,
-  );
+  console.log(pageData, shopifyData);
 
   return (
     <XoBuilder.Layout
