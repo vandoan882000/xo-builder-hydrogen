@@ -6349,7 +6349,7 @@ export const home_default = {
         $collection: {
           id: 'gid://shopify/Collection/451985768702',
           title: 'Men',
-          handle: 'freestyle',
+          handle: 'men',
           image: null,
           isPublished: true,
         },
