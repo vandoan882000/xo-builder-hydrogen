@@ -1,13 +1,20 @@
-import {useLoaderData, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, useMatches, type MetaFunction} from '@remix-run/react';
 import type {LoaderFunctionArgs} from '@remix-run/server-runtime';
 import {defer} from '@remix-run/server-runtime';
 import {getSeoMeta} from '@shopify/hydrogen';
 import {XoBuilder} from '@xotiny/xb-react-elements';
+import invariant from 'tiny-invariant';
 
 import {elements} from '~/config/elements';
 import {article_default} from '~/data/article';
+import {seoPayload} from '~/lib/seo.server';
 
 export async function loader(args: LoaderFunctionArgs) {
+  const {request, params} = args;
+  const {handle} = params;
+
+  invariant(handle, 'Missing handle');
+
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
@@ -18,7 +25,16 @@ export async function loader(args: LoaderFunctionArgs) {
     data: article_default,
   });
 
-  return defer({...deferredData, ...criticalData});
+  const {shopifyData} = criticalData;
+  const {articleDetail} = shopifyData;
+
+  if (!articleDetail) {
+    throw new Response(null, {status: 404});
+  }
+
+  const seo = seoPayload.article({article: articleDetail, url: request.url});
+
+  return defer({...deferredData, ...criticalData, seo});
 }
 
 /**
@@ -33,15 +49,16 @@ function loadDeferredData({context: _}: LoaderFunctionArgs) {
 export const meta: MetaFunction<typeof loader> = (data) => {
   const {matches} = data;
 
-  return [{title: 'Hydrogen | Article'}, ...XoBuilder.pageMeta(data)].concat(
+  return XoBuilder.pageMeta(data).concat(
     getSeoMeta(...matches.map((match) => (match.data as any).seo)),
   );
 };
 
 export default function Article() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
+  const matches = useMatches();
 
-  console.log(pageData, shopifyData);
+  console.log(pageData, shopifyData, matches);
 
   return (
     <XoBuilder.Layout

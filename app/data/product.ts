@@ -2041,13 +2041,13 @@ export const product_default = {
         },
         verticalSpacing: {
           desktop: {
-            value: 3,
+            value: 10,
             unit: 'px',
           },
         },
         horizontalSpacing: {
           desktop: {
-            value: 3,
+            value: 10,
             unit: 'px',
           },
         },
@@ -2133,7 +2133,7 @@ export const product_default = {
               margin: {
                 desktop: {
                   top: {
-                    value: 5,
+                    value: 10,
                     unit: 'px',
                   },
                 },
@@ -10160,7 +10160,7 @@ export const product_default = {
           isPublished: true,
         },
         $product: {
-          handle: 'snowboard'
+          handle: 'beolab-19'
         },
         $limit: {
           value: 10,

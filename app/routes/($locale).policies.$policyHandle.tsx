@@ -1,14 +1,14 @@
+import {useLoaderData} from '@remix-run/react';
+import {getSeoMeta} from '@shopify/hydrogen';
 import {
   json,
-  type MetaArgs,
   type LoaderFunctionArgs,
+  type MetaArgs,
 } from '@shopify/remix-oxygen';
-import {useLoaderData} from '@remix-run/react';
 import invariant from 'tiny-invariant';
-import {getSeoMeta} from '@shopify/hydrogen';
 
-import {PageHeader, Section} from '~/components/Text';
 import {Button} from '~/components/Button';
+import {PageHeader, Section} from '~/components/Text';
 import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
 

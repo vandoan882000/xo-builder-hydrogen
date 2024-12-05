@@ -1,14 +1,14 @@
 import {Await, useRouteLoaderData} from '@remix-run/react';
-import invariant from 'tiny-invariant';
+import {Analytics, CartForm, type CartQueryDataReturn} from '@shopify/hydrogen';
 import {
-  type LoaderFunctionArgs,
   type ActionFunctionArgs,
   json,
+  type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {CartForm, type CartQueryDataReturn, Analytics} from '@shopify/hydrogen';
+import invariant from 'tiny-invariant';
 
-import {isLocalPath} from '~/lib/utils';
 import {Cart} from '~/components/Cart';
+import {isLocalPath} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 
 export async function action({request, context}: ActionFunctionArgs) {

@@ -1895,7 +1895,7 @@ export const home_default = {
         $product: {
           id: 'gid://shopify/Product/8649458876670',
           title: 'SOLECIETY SNEAKIE',
-          handle: 'snowboard',
+          handle: 'beolab-19',
           featuredImage: {
             id: 'gid://shopify/ProductImage/42844152398078',
             url: 'https://cdn.shopify.com/s/files/1/0677/7900/2622/files/recirc-product-white.e88209e1cebbe8c106738c487b070a471.png?v=1726025969',
@@ -20595,8 +20595,8 @@ export const home_default = {
         static: {},
         $blogPicker: {
           id: 90352189694,
-          handle: 'journal',
-          title: 'journal',
+          handle: 'news',
+          title: 'news',
         },
         $limit: {
           value: 6,

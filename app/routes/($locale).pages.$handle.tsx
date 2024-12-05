@@ -1,12 +1,10 @@
+import type {MetaFunction} from '@remix-run/react';
 import {useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
-import {
-  defer,
-  type LoaderFunctionArgs,
-  type MetaArgs,
-} from '@shopify/remix-oxygen';
-import invariant from 'tiny-invariant';
+import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {XoBuilder} from '@xotiny/xb-react-elements';
+import invariant from 'tiny-invariant';
+
 import {elements} from '~/config/elements';
 import {routeHeaders} from '~/data/cache';
 import {home_default} from '~/data/home';
@@ -40,8 +38,12 @@ export async function loader(args: LoaderFunctionArgs) {
   return defer({...criticalData, seo});
 }
 
-export const meta = ({matches}: MetaArgs<typeof loader>) => {
-  return getSeoMeta(...matches.map((match) => (match.data as any).seo));
+export const meta: MetaFunction<typeof loader> = (data) => {
+  const {matches} = data;
+
+  return XoBuilder.pageMeta(data).concat(
+    getSeoMeta(...matches.map((match) => (match.data as any).seo)),
+  );
 };
 
 export default function Page() {

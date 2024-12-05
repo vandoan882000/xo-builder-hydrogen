@@ -122,21 +122,9 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
 
   const seo = seoPayload.root({shop: layout.shop, url: request.url});
 
-  const {storefront, env} = context;
-
   return {
     layout,
     seo,
-    shop: getShopAnalytics({
-      storefront,
-      publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
-    }),
-    consent: {
-      checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
-      storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
-      withPrivacyBanner: true,
-    },
-    selectedLocale: storefront.i18n,
   };
 }
 

@@ -6,9 +6,10 @@ import {XoBuilder} from '@xotiny/xb-react-elements';
 
 import {elements} from '~/config/elements';
 import {home_default} from '~/data/home';
+import {seoPayload} from '~/lib/seo.server';
 
 export async function loader(args: LoaderFunctionArgs) {
-  const {params, context} = args;
+  const {params, context, request} = args;
   const {language, country} = context.storefront.i18n;
 
   if (
@@ -30,7 +31,9 @@ export async function loader(args: LoaderFunctionArgs) {
     data: home_default,
   });
 
-  return defer({...deferredData, ...criticalData});
+  const seo = seoPayload.home({url: request.url});
+
+  return defer({...deferredData, ...criticalData, seo});
 }
 
 /**

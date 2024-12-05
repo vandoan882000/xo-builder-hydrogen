@@ -6,25 +6,25 @@ import {
   useMatches,
   useOutlet,
 } from '@remix-run/react';
-import {Suspense} from 'react';
-import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {flattenConnection} from '@shopify/hydrogen';
+import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {Suspense} from 'react';
 
 import type {
   CustomerDetailsFragment,
   OrderCardFragment,
 } from 'customer-accountapi.generated';
-import {PageHeader, Text} from '~/components/Text';
-import {Button} from '~/components/Button';
-import {OrderCard} from '~/components/OrderCard';
-import {AccountDetails} from '~/components/AccountDetails';
 import {AccountAddressBook} from '~/components/AccountAddressBook';
-import {Modal} from '~/components/Modal';
-import {ProductSwimlane} from '~/components/ProductSwimlane';
+import {AccountDetails} from '~/components/AccountDetails';
+import {Button} from '~/components/Button';
 import {FeaturedCollections} from '~/components/FeaturedCollections';
-import {usePrefixPathWithLocale} from '~/lib/utils';
+import {Modal} from '~/components/Modal';
+import {OrderCard} from '~/components/OrderCard';
+import {ProductSwimlane} from '~/components/ProductSwimlane';
+import {PageHeader, Text} from '~/components/Text';
 import {CACHE_NONE, routeHeaders} from '~/data/cache';
 import {CUSTOMER_DETAILS_QUERY} from '~/graphql/customer-account/CustomerDetailsQuery';
+import {usePrefixPathWithLocale} from '~/lib/utils';
 
 import {doLogout} from './($locale).account_.logout';
 import {
@@ -34,7 +34,7 @@ import {
 
 export const headers = routeHeaders;
 
-export async function loader({request, context, params}: LoaderFunctionArgs) {
+export async function loader({context}: LoaderFunctionArgs) {
   const {data, errors} = await context.customerAccount.query(
     CUSTOMER_DETAILS_QUERY,
   );

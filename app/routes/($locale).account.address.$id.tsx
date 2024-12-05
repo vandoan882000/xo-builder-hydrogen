@@ -1,31 +1,26 @@
 import {
-  json,
-  redirect,
-  type ActionFunction,
-  type AppLoadContext,
-} from '@shopify/remix-oxygen';
-import {
   Form,
   useActionData,
+  useNavigation,
   useOutletContext,
   useParams,
-  useNavigation,
 } from '@remix-run/react';
 import {flattenConnection} from '@shopify/hydrogen';
 import type {CustomerAddressInput} from '@shopify/hydrogen/customer-account-api-types';
+import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 import {Button} from '~/components/Button';
 import {Text} from '~/components/Text';
-import {getInputStyleClasses} from '~/lib/utils';
 import {
-  UPDATE_ADDRESS_MUTATION,
-  DELETE_ADDRESS_MUTATION,
   CREATE_ADDRESS_MUTATION,
+  DELETE_ADDRESS_MUTATION,
+  UPDATE_ADDRESS_MUTATION,
 } from '~/graphql/customer-account/CustomerAddressMutations';
+import {getInputStyleClasses} from '~/lib/utils';
 
-import {doLogout} from './($locale).account_.logout';
 import type {AccountOutletContext} from './($locale).account.edit';
+import {doLogout} from './($locale).account_.logout';
 
 interface ActionData {
   formError?: string;

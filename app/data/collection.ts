@@ -189,7 +189,7 @@ export const collection_default = {
                   ],
                   isSection: false,
                   type: ['color', 'border-color'],
-                  value: 'rgba(30, 30, 30, 0.8)',
+                  value: '',
                 },
                 {
                   key: [
@@ -365,7 +365,7 @@ export const collection_default = {
                   key: ['id_m1oc6fru31vdq+modifier+--xb-color-color'],
                   isSection: false,
                   type: ['color'],
-                  value: 'rgba(30, 30, 30, 1)',
+                  value: '',
                 },
                 {
                   key: [
@@ -2645,7 +2645,7 @@ export const collection_default = {
           label: 'Style 06',
           cssVariables: {
             '--xb-color-background-color': 'rgba(184, 184, 184, 0.2)',
-            '--xb-color-color': 'rgba(30, 30, 30, 1)',
+            '--xb-color-color': '',
             '--xb-number-device-border-radius': {
               desktop: {
                 top: {
@@ -8812,7 +8812,7 @@ export const collection_default = {
               margin: {
                 desktop: {
                   top: {
-                    value: 30,
+                    value: 15,
                     unit: 'px',
                   },
                 },

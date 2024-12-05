@@ -1,13 +1,13 @@
-import {Link, useLoaderData} from '@remix-run/react';
+import {Await, Link, useLoaderData} from '@remix-run/react';
 import {getPaginationVariables, getSeoMeta} from '@shopify/hydrogen';
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
 import {defer} from '@shopify/remix-oxygen';
+import type {CSSProperties} from 'react';
+import {Suspense} from 'react';
 
 import {Grid} from '~/components/Grid';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {PageHeader, Section} from '~/components/Text';
 import {routeHeaders} from '~/data/cache';
-import {getImageLoadingPriority} from '~/lib/const';
 
 export const headers = routeHeaders;
 
@@ -15,62 +15,47 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
 };
 
-export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
-  const criticalData = await loadCriticalData(args);
-
-  return defer({...deferredData, ...criticalData});
-}
-
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- */
-async function loadCriticalData({context, request}: LoaderFunctionArgs) {
+export async function loader({context, request}: LoaderFunctionArgs) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 10,
   });
 
-  const [{blogs}] = await Promise.all([
-    context.storefront.query(BLOGS_QUERY, {
-      variables: {
-        ...paginationVariables,
-      },
-    }),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
+  const data = context.storefront.query(BLOGS_QUERY, {
+    variables: {
+      ...paginationVariables,
+    },
+  });
 
-  return {blogs};
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
-function loadDeferredData({context}: LoaderFunctionArgs) {
-  return {};
+  return defer({data});
 }
 
 export default function Blogs() {
-  const {blogs} = useLoaderData<typeof loader>();
+  const {data} = useLoaderData<typeof loader>();
 
   return (
     <>
       <PageHeader heading="Blogs" />
       <Section>
-        <Grid as="ol" layout="blog">
-          {blogs.nodes.map?.((blog, i) => (
-            <BlogCard
-              blogHandle={blog.handle ?? ''}
-              title={blog.title}
-              key={blog.handle}
-            />
-          ))}
-        </Grid>
+        <Suspense fallback={<>Loading</>}>
+          <Await
+            errorElement="There was a problem loading product variants"
+            resolve={data}
+          >
+            {(data) => {
+              return (
+                <Grid as="ol" layout="blog">
+                  {data.blogs.nodes.map?.((blog, i) => (
+                    <BlogCard
+                      blogHandle={blog.handle ?? ''}
+                      title={blog.title}
+                      key={blog.handle}
+                    />
+                  ))}
+                </Grid>
+              );
+            }}
+          </Await>
+        </Suspense>
       </Section>
     </>
   );
@@ -87,20 +72,46 @@ function BlogCard({
   return (
     <li key={blogHandle}>
       <Link to={`/blogs/${blogHandle}`}>
-        <img
-          is="xo-lazyload"
-          xo-src="https://cdn.shopify.com/s/files/1/0677/7900/2622/files/Article-placeholder.svg?v=1717754370"
-          loading="lazy"
-          alt={title}
-          width="300"
-          height="300"
-          xo-intrinsic-width="300"
-          xo-intrinsic-height="300"
-          xo-fallback-width="300"
-          style={{
-            aspectRatio: 3 / 2,
-          }}
-        />
+        <div style={{position: 'relative'}}>
+          <img
+            is="xo-lazyload"
+            xo-src="https://cdn.shopify.com/s/files/1/0677/7900/2622/files/Article-placeholder.svg?v=1717754370"
+            src="https://cdn.shopify.com/s/files/1/0677/7900/2622/files/Article-placeholder.svg?v=1717754370"
+            loading="lazy"
+            alt={title}
+            width="300"
+            height="300"
+            xo-intrinsic-width="300"
+            xo-intrinsic-height="300"
+            xo-fallback-width="300"
+            style={{
+              aspectRatio: 3 / 2,
+            }}
+          />
+          <div className="xb-image__overlay xo-lazyload-overlay">
+            <div
+              className="xb-image__loading"
+              style={
+                {
+                  '--xb-image-loading-background': 'rgba(0, 0, 0, 0.1)',
+                } as CSSProperties
+              }
+            >
+              <div
+                className="xo-loader-1"
+                style={
+                  {
+                    '--color': '#000',
+                    '--duration': 1600,
+                    '--size': 40,
+                  } as CSSProperties
+                }
+              >
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
         <h2 className="mt-4 font-medium">{title}</h2>
       </Link>
     </li>

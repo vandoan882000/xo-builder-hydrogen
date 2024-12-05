@@ -1,20 +1,20 @@
-import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import {
-  useActionData,
   Form,
-  useOutletContext,
+  useActionData,
   useNavigation,
+  useOutletContext,
 } from '@remix-run/react';
 import type {
   Customer,
   CustomerUpdateInput,
 } from '@shopify/hydrogen/customer-account-api-types';
+import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 import {Button} from '~/components/Button';
 import {Text} from '~/components/Text';
-import {getInputStyleClasses} from '~/lib/utils';
 import {CUSTOMER_UPDATE_MUTATION} from '~/graphql/customer-account/CustomerUpdateMutation';
+import {getInputStyleClasses} from '~/lib/utils';
 
 import {doLogout} from './($locale).account_.logout';
 

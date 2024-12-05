@@ -2,8 +2,8 @@ import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 import {
-  PRODUCT_CARD_FRAGMENT,
   FEATURED_COLLECTION_FRAGMENT,
+  PRODUCT_CARD_FRAGMENT,
 } from '~/data/fragments';
 
 export async function loader({context: {storefront}}: LoaderFunctionArgs) {

@@ -1,23 +1,23 @@
+import {Await, Form, useLoaderData} from '@remix-run/react';
+import {
+  Analytics,
+  getPaginationVariables,
+  getSeoMeta,
+  Pagination,
+} from '@shopify/hydrogen';
 import {
   defer,
-  type MetaArgs,
   type LoaderFunctionArgs,
+  type MetaArgs,
 } from '@shopify/remix-oxygen';
-import {Await, Form, useLoaderData} from '@remix-run/react';
 import {Suspense} from 'react';
-import {
-  Pagination,
-  getPaginationVariables,
-  Analytics,
-  getSeoMeta,
-} from '@shopify/hydrogen';
 
-import {Heading, PageHeader, Section, Text} from '~/components/Text';
-import {Input} from '~/components/Input';
+import {FeaturedCollections} from '~/components/FeaturedCollections';
 import {Grid} from '~/components/Grid';
+import {Input} from '~/components/Input';
 import {ProductCard} from '~/components/ProductCard';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
-import {FeaturedCollections} from '~/components/FeaturedCollections';
+import {Heading, PageHeader, Section, Text} from '~/components/Text';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getImageLoadingPriority, PAGINATION_SIZE} from '~/lib/const';
 import {seoPayload} from '~/lib/seo.server';
