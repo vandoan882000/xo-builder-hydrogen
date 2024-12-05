@@ -56,7 +56,12 @@ export const meta: MetaFunction<typeof loader> = (data) => {
 export default function Homepage() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
 
-  console.log(pageData, shopifyData);
+  console.log(
+    pageData,
+    shopifyData,
+    process.env.NODE_ENV === 'development',
+    process.env.NODE_ENV,
+  );
 
   return (
     <XoBuilder.Layout
