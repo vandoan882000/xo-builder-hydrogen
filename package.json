@@ -27,7 +27,7 @@
     "@shopify/cli": "^3.69.4",
     "@shopify/hydrogen": "^2024.10.0",
     "@shopify/remix-oxygen": "^2.0.9",
-    "@xotiny/xb-react-elements": "^1.0.0",
+    "@xotiny/xb-react-elements": "^1.0.1",
     "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
     "graphql": "^16.6.0",
