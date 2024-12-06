@@ -36,7 +36,7 @@ import wcStyles from '~/wc/wc.css?url';
 import wcJs from '~/wc/wc.js?url';
 import builderBaseStyles from '~/styles/xo-builder.base.css?url';
 import resetStyles from '~/styles/reset.css?url';
-import elementStyles from '@xotiny/xb-react-elements/dist/index.css';
+import '@xotiny/xb-react-elements/dist/index.css';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -67,7 +67,6 @@ export const links: LinksFunction = () => {
     {rel: 'stylesheet', href: appStyles},
     {rel: 'stylesheet', href: builderBaseStyles},
     {rel: 'stylesheet', href: wcStyles},
-    {rel: 'stylesheet', href: elementStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
