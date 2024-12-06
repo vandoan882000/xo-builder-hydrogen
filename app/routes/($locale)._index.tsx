@@ -1,8 +1,8 @@
 import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {LoaderFunctionArgs} from '@remix-run/server-runtime';
 import {defer} from '@remix-run/server-runtime';
-import {getSeoMeta} from '@shopify/hydrogen';
 import {XoBuilder} from '@xotiny/xb-react-elements';
+
 import {elements} from '~/config/elements';
 import {home_default} from '~/data/home';
 import {seoPayload} from '~/lib/seo.server';
@@ -44,12 +44,8 @@ function loadDeferredData({context: _}: LoaderFunctionArgs) {
   return {};
 }
 
-export const meta: MetaFunction<typeof loader> = (data) => {
-  const {matches} = data;
-
-  return [{title: 'Hydrogen | Home'}, ...XoBuilder.pageMeta(data)].concat(
-    getSeoMeta(...matches.map((match) => (match.data as any).seo)),
-  );
+export const meta: MetaFunction<typeof loader> = (metaData) => {
+  return XoBuilder.pageMeta(metaData);
 };
 
 export default function Homepage() {

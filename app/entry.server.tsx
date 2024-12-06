@@ -18,10 +18,32 @@ export default async function handleRequest(
     },
     scriptSrc: [
       'self',
+      `'unsafe-eval'`,
       'https://cdn.shopify.com',
       'https://shopify.com',
       'https://www.google-analytics.com',
       'https://www.googletagmanager.com',
+      'https://xo-builder.myshopify.com',
+      ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
+    ],
+    imgSrc: [
+      'self',
+      'https://cdn.shopify.com',
+      'https://shopify.com',
+      'https://xo-builder.myshopify.com',
+      ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
+    ],
+    styleSrc: [
+      'self',
+      `'unsafe-inline'`,
+      'https://fonts.googleapis.com',
+      'https://cdn.shopify.com',
+      'https://xo-builder.myshopify.com',
+      ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
+    ],
+    fontSrc: [
+      'self',
+      'https://fonts.gstatic.com',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
   });

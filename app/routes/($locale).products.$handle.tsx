@@ -52,11 +52,7 @@ function loadDeferredData({context: _}: LoaderFunctionArgs) {
 }
 
 export const meta: MetaFunction<typeof loader> = (data) => {
-  const {matches} = data;
-
-  return XoBuilder.pageMeta(data).concat(
-    getSeoMeta(...matches.map((match) => (match.data as any).seo)),
-  );
+  return XoBuilder.pageMeta(data);
 };
 
 export default function Product() {

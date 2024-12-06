@@ -47,18 +47,13 @@ function loadDeferredData({context: _}: LoaderFunctionArgs) {
 }
 
 export const meta: MetaFunction<typeof loader> = (data) => {
-  const {matches} = data;
-
-  return XoBuilder.pageMeta(data).concat(
-    getSeoMeta(...matches.map((match) => (match.data as any).seo)),
-  );
+  return XoBuilder.pageMeta(data);
 };
 
 export default function Article() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
-  const matches = useMatches();
 
-  console.log(pageData, shopifyData, matches);
+  console.log(pageData, shopifyData);
 
   return (
     <XoBuilder.Layout
