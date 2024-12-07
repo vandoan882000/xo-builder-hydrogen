@@ -31,12 +31,12 @@ import {GenericError} from '~/components/GenericError';
 import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
-import '~/styles/app.css?url';
-import '~/wc/wc.css?url';
+import appStyles from '~/styles/app.css?url';
+import wcStyles from '~/wc/wc.css?url';
 import wcJs from '~/wc/wc.js?url';
-import '~/styles/xo-builder.base.css?url';
-import '~/styles/reset.css?url';
-import '@xotiny/xb-react-elements/dist/index.css';
+import builderBaseStyles from '~/styles/xo-builder.base.css?url';
+import resetStyles from '~/styles/reset.css?url';
+import elementStyles from '~/styles/element-style.css?url';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -63,6 +63,11 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export const links: LinksFunction = () => {
   return [
+    {rel: 'stylesheet', href: resetStyles},
+    {rel: 'stylesheet', href: appStyles},
+    {rel: 'stylesheet', href: wcStyles},
+    {rel: 'stylesheet', href: builderBaseStyles},
+    {rel: 'stylesheet', href: elementStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
