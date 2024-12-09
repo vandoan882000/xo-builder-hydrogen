@@ -65,7 +65,7 @@ export default function Collection() {
   return (
     <>
       <XoBuilder.Layout
-        isDev={true}
+        isDev={process.env.NODE_ENV === 'development'}
         elements={elements}
         page={pageData}
         shopifyData={shopifyData}
