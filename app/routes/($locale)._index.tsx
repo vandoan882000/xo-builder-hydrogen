@@ -1,4 +1,4 @@
-import {useLoaderData, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, useMatches, type MetaFunction} from '@remix-run/react';
 import type {LoaderFunctionArgs} from '@remix-run/server-runtime';
 import {defer} from '@remix-run/server-runtime';
 import {XoBuilder} from '@xotiny/xb-react-elements';
@@ -45,13 +45,15 @@ function loadDeferredData({context: _}: LoaderFunctionArgs) {
 }
 
 export const meta: MetaFunction<typeof loader> = (metaData) => {
+  console.log(metaData, 1);
   return XoBuilder.pageMeta(metaData);
 };
 
 export default function Homepage() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
+  const matches = useMatches();
 
-  console.log(pageData, shopifyData);
+  console.log(pageData, shopifyData, matches, 123);
 
   return (
     <XoBuilder.Layout
