@@ -20,8 +20,6 @@ export async function loader(args: LoaderFunctionArgs) {
     throw new Response(null, {status: 404});
   }
 
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
 
   // Await the critical data required to render initial state of the page
   const criticalData = await XoBuilder.loadPageData({
@@ -32,21 +30,11 @@ export async function loader(args: LoaderFunctionArgs) {
 
   const seo = seoPayload.home({url: request.url});
 
-  return defer({...deferredData, ...criticalData, seo});
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
-function loadDeferredData({context: _}: LoaderFunctionArgs) {
-  return {};
+  return defer({...criticalData, seo});
 }
 
 export const meta: MetaFunction<typeof loader> = (metaData) => {
-  console.log(metaData, 1);
-  return XoBuilder.pageMeta(metaData);
+  return [];
 };
 
 export default function Homepage() {
@@ -57,7 +45,7 @@ export default function Homepage() {
 
   return (
     <XoBuilder.Layout
-      isDev={process.env.NODE_ENV === 'development'}
+      isDev={false}
       elements={elements}
       page={pageData}
       shopifyData={shopifyData}
