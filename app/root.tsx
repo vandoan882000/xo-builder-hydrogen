@@ -31,12 +31,11 @@ import {GenericError} from '~/components/GenericError';
 import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
-import '~/styles/app.css';
-import '~/styles/reset.css';
-import '~/wc/wc.css';
+import appStyles from '~/styles/app.css?url';
+import wcStyles from '~/wc/wc.css?url';
 import wcJs from '~/wc/wc.js?url';
-import '~/styles/xo-builder.base.css';
-import '@xotiny/xb-react-elements/dist/index.css';
+import builderBaseStyles from '~/styles/xo-builder.base.css?url';
+import resetStyles from '~/styles/reset.css?url';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -61,8 +60,32 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   return false;
 };
 
+// export const links: LinksFunction = () => [
+//   ...(cssBundleHref
+//     ? [
+//         {rel: 'stylesheet', href: resetStyles},
+//         {rel: 'stylesheet', href: appStyles},
+//         {rel: 'stylesheet', href: wcStyles},
+//         {rel: 'stylesheet', href: builderBaseStyles},
+//         {
+//           rel: 'preconnect',
+//           href: 'https://cdn.shopify.com',
+//         },
+//         {
+//           rel: 'preconnect',
+//           href: 'https://shop.app',
+//         },
+//         {rel: 'icon', type: 'image/svg+xml', href: favicon},
+//       ]
+//     : []),
+// ];
+
 export const links: LinksFunction = () => {
   return [
+    {rel: 'stylesheet', href: resetStyles},
+    {rel: 'stylesheet', href: appStyles},
+    {rel: 'stylesheet', href: wcStyles},
+    {rel: 'stylesheet', href: builderBaseStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
@@ -147,6 +170,8 @@ function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<typeof loader>('root');
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
+
+  console.log(data, 123);
 
   return (
     <XoBuilder.Root>
