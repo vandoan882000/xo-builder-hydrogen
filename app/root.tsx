@@ -25,18 +25,17 @@ import {
   type SeoConfig,
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
-import {cssBundleHref} from '@remix-run/css-bundle';
 
 import {PageLayout} from '~/components/PageLayout';
 import {GenericError} from '~/components/GenericError';
 import {NotFound} from '~/components/NotFound';
+import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import '~/styles/app.css';
 import '~/wc/wc.css';
 import wcJs from '~/wc/wc.js?url';
 import '~/styles/xo-builder.base.css';
 import '~/styles/reset.css';
-import favicon from '~/assets/favicon.svg';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -61,56 +60,19 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   return false;
 };
 
-// export const links: LinksFunction = () => [
-//   ...(cssBundleHref
-//     ? [
-//         {rel: 'stylesheet', href: resetStyles},
-//         {rel: 'stylesheet', href: appStyles},
-//         {rel: 'stylesheet', href: wcStyles},
-//         {rel: 'stylesheet', href: builderBaseStyles},
-//         {
-//           rel: 'preconnect',
-//           href: 'https://cdn.shopify.com',
-//         },
-//         {
-//           rel: 'preconnect',
-//           href: 'https://shop.app',
-//         },
-//         {rel: 'icon', type: 'image/svg+xml', href: favicon},
-//       ]
-//     : []),
-// ];
-
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
-  {
-    rel: 'preconnect',
-    href: 'https://cdn.shopify.com',
-  },
-  {
-    rel: 'preconnect',
-    href: 'https://shop.app',
-  },
-  {rel: 'icon', type: 'image/svg+xml', href: favicon},
-];
-
-// export const links: LinksFunction = () => {
-//   return [
-//     {rel: 'stylesheet', href: resetStyles },
-//     {rel: 'stylesheet', href: appStyles},
-//     {rel: 'stylesheet', href: wcStyles},
-//     {rel: 'stylesheet', href: builderBaseStyles},
-//     {
-//       rel: 'preconnect',
-//       href: 'https://cdn.shopify.com',
-//     },
-//     {
-//       rel: 'preconnect',
-//       href: 'https://shop.app',
-//     },
-//     {rel: 'icon', type: 'image/svg+xml', href: favicon},
-//   ];
-// };
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: 'preconnect',
+      href: 'https://cdn.shopify.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://shop.app',
+    },
+    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+  ];
+};
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -184,8 +146,8 @@ function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<typeof loader>('root');
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
-
-  console.log(data, cssBundleHref, 123);
+  // @ts-ignore
+  const cssFromSettings = (data?.css ?? '') as string;
 
   return (
     <XoBuilder.Root>
@@ -193,6 +155,7 @@ function Layout({children}: {children?: React.ReactNode}) {
         <XoBuilder.Root.Head jsUrls={[wcJs]}>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <Meta />
           <Links />
         </XoBuilder.Root.Head>
         <body>
@@ -202,6 +165,12 @@ function Layout({children}: {children?: React.ReactNode}) {
               shop={data.shop}
               consent={data.consent}
             >
+              {!!cssFromSettings && (
+                <style
+                  dangerouslySetInnerHTML={{__html: cssFromSettings}}
+                  type="text/css"
+                />
+              )}
               <PageLayout
                 key={`${locale.language}-${locale.country}`}
                 {...data}
