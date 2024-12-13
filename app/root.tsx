@@ -31,13 +31,13 @@ import {GenericError} from '~/components/GenericError';
 import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
-import '~/styles/app.css';
-import '~/wc/wc.css';
 import wcJs from '~/wc/wc.js?url';
-import '~/styles/xo-builder.base.css';
-import '~/styles/reset.css';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
+import '~/styles/app.css';
+import '~/wc/wc.css';
+import '~/styles/xo-builder.base.css';
+import '~/styles/reset.css';
 
 export type RootLoader = typeof loader;
 
