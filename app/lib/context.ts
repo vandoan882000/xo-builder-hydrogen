@@ -34,7 +34,7 @@ export async function createAppLoadContext(
     i18n: getLocaleFromRequest(request),
     cart: {
       queryFragment: CART_QUERY_FRAGMENT,
-    },
+    }
   });
 
   return {

@@ -24,6 +24,8 @@ export default async function handleRequest(
       'https://www.google-analytics.com',
       'https://www.googletagmanager.com',
       'https://xo-builder.myshopify.com',
+      'https://cdn.xotiny.com',
+      'https://unpkg.com',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     imgSrc: [
@@ -31,6 +33,7 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://shopify.com',
       'https://xo-builder.myshopify.com',
+      'https://cdn.xotiny.com',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     styleSrc: [
@@ -39,6 +42,8 @@ export default async function handleRequest(
       'https://fonts.googleapis.com',
       'https://cdn.shopify.com',
       'https://xo-builder.myshopify.com',
+      'https://cdn.xotiny.com',
+      'https://unpkg.com',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     fontSrc: [
