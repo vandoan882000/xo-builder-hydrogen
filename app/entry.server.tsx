@@ -17,9 +17,8 @@ export default async function handleRequest(
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
     scriptSrc: [
-      'self',
-      `'unsafe-eval'`,
-      `'unsafe-inline'`,
+      "'self'",
+      "'unsafe-eval'",
       'https://cdn.shopify.com',
       'https://shopify.com',
       'https://www.google-analytics.com',
@@ -27,19 +26,21 @@ export default async function handleRequest(
       'https://xo-builder.myshopify.com',
       'https://cdn.xotiny.com',
       'https://unpkg.com',
+      'sha256-QuUqhU9tfQFsg3RrcTEDUKyoC+k694yJHFgVDovSqPo=',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     imgSrc: [
-      'self',
+      "'self'",
       'https://cdn.shopify.com',
       'https://shopify.com',
       'https://xo-builder.myshopify.com',
       'https://cdn.xotiny.com',
+      'blob:',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     styleSrc: [
-      'self',
-      `'unsafe-inline'`,
+      "'self'",
+      "'unsafe-inline'",
       'https://fonts.googleapis.com',
       'https://cdn.shopify.com',
       'https://xo-builder.myshopify.com',
@@ -48,10 +49,12 @@ export default async function handleRequest(
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     fontSrc: [
-      'self',
+      "'self'",
       'https://fonts.gstatic.com',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
+    objectSrc: ["'self'", 'blob:'],
+    connectSrc: ["'self'", 'blob:'],
   });
 
   const body = await renderToReadableStream(
