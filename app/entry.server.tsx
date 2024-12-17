@@ -26,7 +26,6 @@ export default async function handleRequest(
       'https://xo-builder.myshopify.com',
       'https://cdn.xotiny.com',
       'https://unpkg.com',
-      'sha256-QuUqhU9tfQFsg3RrcTEDUKyoC+k694yJHFgVDovSqPo=',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     imgSrc: [
@@ -40,12 +39,10 @@ export default async function handleRequest(
     ],
     styleSrc: [
       "'self'",
-      "'unsafe-inline'",
       'https://fonts.googleapis.com',
       'https://cdn.shopify.com',
       'https://xo-builder.myshopify.com',
       'https://cdn.xotiny.com',
-      'https://unpkg.com',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     fontSrc: [
