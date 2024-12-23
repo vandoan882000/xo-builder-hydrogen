@@ -3,22 +3,13 @@ import type {
   Article,
   Blog,
   Collection,
+  Image,
   Page,
   Product,
   ProductVariant,
   ShopPolicy,
-  Image,
 } from '@shopify/hydrogen/storefront-api-types';
-import type {
-  Article as SeoArticle,
-  BreadcrumbList,
-  Blog as SeoBlog,
-  CollectionPage,
-  Offer,
-  Organization,
-  Product as SeoProduct,
-  WebPage,
-} from 'schema-dts';
+import type {BreadcrumbList, CollectionPage, Offer} from 'schema-dts';
 
 import type {ShopFragment} from 'storefrontapi.generated';
 
@@ -169,8 +160,8 @@ function product({
   url,
   selectedVariant,
 }: {
-  product: ProductRequiredFields;
-  selectedVariant: SelectedVariantRequiredFields;
+  product: any;
+  selectedVariant: any;
   url: Request['url'];
 }): SeoConfig {
   const description = truncate(

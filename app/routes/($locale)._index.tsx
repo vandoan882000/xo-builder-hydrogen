@@ -1,4 +1,4 @@
-import {useLoaderData, useMatches, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {LoaderFunctionArgs} from '@remix-run/server-runtime';
 import {defer} from '@remix-run/server-runtime';
 import {XoBuilder} from '@xotiny/xb-react-elements';
@@ -20,40 +20,26 @@ export async function loader(args: LoaderFunctionArgs) {
     throw new Response(null, {status: 404});
   }
 
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
-
   // Await the critical data required to render initial state of the page
   const criticalData = await XoBuilder.loadPageData({
-    pageType: 'dev',
+    pageType: 'home',
     args,
     data: home_default,
   });
 
   const seo = seoPayload.home({url: request.url});
 
-  return defer({...deferredData, ...criticalData, seo});
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
-function loadDeferredData({context: _}: LoaderFunctionArgs) {
-  return {};
+  return defer({...criticalData, seo});
 }
 
 export const meta: MetaFunction<typeof loader> = (metaData) => {
-  console.log(metaData, 1);
   return XoBuilder.pageMeta(metaData);
 };
 
 export default function Homepage() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
-  const matches = useMatches();
 
-  console.log(pageData, shopifyData, matches, 123);
+  console.log(pageData, shopifyData);
 
   return (
     <XoBuilder.Layout

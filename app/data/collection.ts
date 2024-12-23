@@ -9116,11 +9116,7 @@ export const collection_default = {
       imageSync: 'element.settings.image.url',
     },
   },
-  order: [
-    'id_m1og24sd1fyp',
-    'id_m1obnb611gfg',
-    'id_m1oo2v1w55ugb',
-  ],
+  order: ['id_m1og24sd1fyp', 'id_m1obnb611gfg', 'id_m1oo2v1w55ugb'],
   tags: [],
   pageType: 'collection',
 };

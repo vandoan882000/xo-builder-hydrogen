@@ -25,7 +25,7 @@ export default async function handleRequest(
       'https://www.googletagmanager.com',
       'https://xo-builder.myshopify.com',
       'https://cdn.xotiny.com',
-      'https://unpkg.com',
+      'https://unpkg.com/@google/',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     imgSrc: [
@@ -39,6 +39,7 @@ export default async function handleRequest(
     ],
     styleSrc: [
       "'self'",
+      "'unsafe-inline'",
       'https://fonts.googleapis.com',
       'https://cdn.shopify.com',
       'https://xo-builder.myshopify.com',
@@ -51,7 +52,7 @@ export default async function handleRequest(
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
     objectSrc: ["'self'", 'blob:'],
-    connectSrc: ["'self'", 'blob:'],
+    connectSrc: ["'self'", 'blob:', 'vimeo.com', '*.google-analytics.com'],
   });
 
   const body = await renderToReadableStream(

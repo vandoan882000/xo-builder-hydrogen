@@ -31,13 +31,13 @@ import {GenericError} from '~/components/GenericError';
 import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
-import wcJs from '~/wc/wc.js?url';
-
-import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import '~/styles/app.css';
 import '~/wc/wc.css';
+import wcJs from '~/wc/wc.js?url';
 import '~/styles/xo-builder.base.css';
 import '~/styles/reset.css';
+
+import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
 export type RootLoader = typeof loader;
 
@@ -75,15 +75,18 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
+  const {context} = args;
+  const {storefront, env} = context;
+
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
-  const rootData = await XoBuilder.loadRootData({isDev: true});
-
-  const {storefront, env} = args.context;
+  const rootData = await XoBuilder.loadRootData({
+    isDev: true,
+    shop: env.PUBLIC_STORE_DOMAIN,
+  });
 
   return defer({
     ...deferredData,
@@ -97,10 +100,10 @@ export async function loader(args: LoaderFunctionArgs) {
     consent: {
       checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
-      withPrivacyBanner: true,
+      withPrivacyBanner: false,
       // localize the privacy banner
-      country: storefront.i18n.country,
-      language: storefront.i18n.language,
+      country: args.context.storefront.i18n.country,
+      language: args.context.storefront.i18n.language,
     },
     selectedLocale: storefront.i18n,
   });
@@ -131,7 +134,6 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const {cart, customerAccount} = context;
-  console.log(customerAccount, 1);
 
   return {
     isLoggedIn: customerAccount.isLoggedIn(),

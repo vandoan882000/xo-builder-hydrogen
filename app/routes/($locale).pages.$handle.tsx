@@ -1,13 +1,12 @@
 import type {MetaFunction} from '@remix-run/react';
 import {useLoaderData} from '@remix-run/react';
-import {getSeoMeta} from '@shopify/hydrogen';
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {XoBuilder} from '@xotiny/xb-react-elements';
 import invariant from 'tiny-invariant';
 
 import {elements} from '~/config/elements';
 import {routeHeaders} from '~/data/cache';
-import {home_default} from '~/data/home';
+import {page_default} from '~/data/page';
 import {seoPayload} from '~/lib/seo.server';
 
 export const headers = routeHeaders;
@@ -17,13 +16,11 @@ export async function loader(args: LoaderFunctionArgs) {
 
   invariant(params.handle, 'Missing page handle');
 
-  // Start fetching non-critical data without blocking time to first byte
-
   // Await the critical data required to render initial state of the page
   const criticalData = await XoBuilder.loadPageData({
-    pageType: 'dev',
+    pageType: 'regular',
     args,
-    data: home_default,
+    data: page_default,
   });
 
   const {shopifyData} = criticalData;
@@ -48,7 +45,7 @@ export default function Page() {
 
   return (
     <XoBuilder.Layout
-      isDev={true}
+      isDev={process.env.NODE_ENV === 'development'}
       elements={elements}
       page={pageData}
       shopifyData={shopifyData}

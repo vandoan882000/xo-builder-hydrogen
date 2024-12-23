@@ -8,7 +8,7 @@ export const product_default = {
       type: 'wrapper',
       label: 'Product Detail',
       children: ['id_m1011be44526'],
-    spaceIdSync: 'styles',
+      spaceIdSync: 'styles',
       parent: '',
       settings: {
         positionType: 'relative',
@@ -1751,7 +1751,16 @@ export const product_default = {
           class: '',
         },
       },
-      children: ['id_m0yzdrzj452d3', 'id_m0yzdrzj44lp2', 'id_m0z0n47c90tol', 'id_m0yzdrzj47srv', 'id_m0z0ysyy92v56', 'id_m0yzdrzj515gy', 'id_m0yzdrzj58jre', 'id_m0z0zzg99586i'],
+      children: [
+        'id_m0yzdrzj452d3',
+        'id_m0yzdrzj44lp2',
+        'id_m0z0n47c90tol',
+        'id_m0yzdrzj47srv',
+        'id_m0z0ysyy92v56',
+        'id_m0yzdrzj515gy',
+        'id_m0yzdrzj58jre',
+        'id_m0z0zzg99586i',
+      ],
     },
     id_m0yzdrzj452d3: {
       type: 'element',
@@ -9324,7 +9333,7 @@ export const product_default = {
       },
       labelSync: 'element.settings.text',
     },
-    
+
     id_m0z2pnyx1082ki: {
       id: 'id_m0z2pnyx1082ki',
       elementId: 'section',
@@ -10160,7 +10169,7 @@ export const product_default = {
           isPublished: true,
         },
         $product: {
-          handle: 'beolab-19'
+          handle: 'snowboard',
         },
         $limit: {
           value: 10,
@@ -20748,14 +20757,14 @@ export const product_default = {
         },
       },
       labelSync: 'element.settings.title',
-    }
+    },
   },
   order: [
     'id_m0yzdrzj30wfy',
     'id_m0z1v9vs1002na',
     'id_m0zdllos42ik',
     'id_m0zd9nn626uor',
-    'id_m0z2pnyx1082ki'
+    'id_m0z2pnyx1082ki',
   ],
   tags: [],
   pageType: 'product',

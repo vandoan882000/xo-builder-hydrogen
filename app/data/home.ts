@@ -1895,7 +1895,7 @@ export const home_default = {
         $product: {
           id: 'gid://shopify/Product/8649458876670',
           title: 'SOLECIETY SNEAKIE',
-          handle: 'beolab-19',
+          handle: 'snowboard',
           featuredImage: {
             id: 'gid://shopify/ProductImage/42844152398078',
             url: 'https://cdn.shopify.com/s/files/1/0677/7900/2622/files/recirc-product-white.e88209e1cebbe8c106738c487b070a471.png?v=1726025969',
@@ -6349,7 +6349,7 @@ export const home_default = {
         $collection: {
           id: 'gid://shopify/Collection/451985768702',
           title: 'Men',
-          handle: 'men',
+          handle: 'freestyle',
           image: null,
           isPublished: true,
         },
@@ -20595,8 +20595,8 @@ export const home_default = {
         static: {},
         $blogPicker: {
           id: 90352189694,
-          handle: 'news',
-          title: 'news',
+          handle: 'journal',
+          title: 'journal',
         },
         $limit: {
           value: 6,

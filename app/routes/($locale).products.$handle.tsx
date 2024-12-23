@@ -1,7 +1,11 @@
-import {useLoaderData, useMatches, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {LoaderFunctionArgs} from '@remix-run/server-runtime';
 import {defer} from '@remix-run/server-runtime';
-import {Analytics, getSeoMeta} from '@shopify/hydrogen';
+import {
+  Analytics,
+  getSelectedProductOptions,
+  useSelectedOptionInUrlParam,
+} from '@shopify/hydrogen';
 import {XoBuilder} from '@xotiny/xb-react-elements';
 import invariant from 'tiny-invariant';
 
@@ -15,13 +19,9 @@ export async function loader(args: LoaderFunctionArgs) {
 
   invariant(handle, 'Missing handle param, check route filename');
 
-  // Start fetching non-critical data without blocking time to first byte
-
-  const deferredData = loadDeferredData(args);
-
   // Await the critical data required to render initial state of the page
   const criticalData = await XoBuilder.loadPageData({
-    pageType: 'dev',
+    pageType: 'product',
     args,
     data: product_default,
   });
@@ -35,20 +35,11 @@ export async function loader(args: LoaderFunctionArgs) {
 
   const seo = seoPayload.product({
     product: productDetail,
-    selectedVariant: productDetail.selectedVariant,
+    selectedVariant: productDetail.selectedOrFirstAvailableVariant,
     url: request.url,
   });
 
-  return defer({...deferredData, ...criticalData, seo});
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
-function loadDeferredData({context: _}: LoaderFunctionArgs) {
-  return {};
+  return defer({...criticalData, seo});
 }
 
 export const meta: MetaFunction<typeof loader> = (data) => {
@@ -58,6 +49,10 @@ export const meta: MetaFunction<typeof loader> = (data) => {
 export default function Product() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
   const {productDetail} = shopifyData;
+
+  useSelectedOptionInUrlParam(
+    productDetail.selectedOrFirstAvailableVariant.selectedOptions,
+  );
 
   console.log(pageData, shopifyData);
 
@@ -76,10 +71,14 @@ export default function Product() {
             {
               id: productDetail.id,
               title: productDetail.title,
-              price: productDetail.selectedVariant?.price.amount || '0',
+              price:
+                productDetail.selectedOrFirstAvailableVariant?.price.amount ||
+                '0',
               vendor: productDetail.vendor,
-              variantId: productDetail.selectedVariant?.id || '',
-              variantTitle: productDetail.selectedVariant?.title || '',
+              variantId:
+                productDetail.selectedOrFirstAvailableVariant?.id || '',
+              variantTitle:
+                productDetail.selectedOrFirstAvailableVariant?.title || '',
               quantity: 1,
             },
           ],
@@ -88,3 +87,15 @@ export default function Product() {
     </>
   );
 }
+
+const PRODUCT_QUERY = `#graphql
+  query Product(
+    $country: CountryCode
+    $handle: String!
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    product(handle: $handle) {
+      id
+    }
+  }
+` as const;
