@@ -1,4 +1,4 @@
-import {createHydrogenContext} from '@shopify/hydrogen';
+import {createHydrogenContext, createWithCache} from '@shopify/hydrogen';
 
 import {CART_QUERY_FRAGMENT} from '~/data/fragments';
 
@@ -27,6 +27,9 @@ export async function createAppLoadContext(
     AppSession.init(request, [env.SESSION_SECRET]),
   ]);
 
+  // Create withCache object
+  const withCache = createWithCache({cache, waitUntil, request});
+
   const hydrogenContext = createHydrogenContext({
     env,
     request,
@@ -41,5 +44,6 @@ export async function createAppLoadContext(
 
   return {
     ...hydrogenContext,
+    withCache,
   };
 }
