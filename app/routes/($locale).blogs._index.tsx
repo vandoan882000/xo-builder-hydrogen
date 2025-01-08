@@ -112,7 +112,7 @@ function BlogCard({
             </div>
           </div>
         </div>
-        <h2 className="mt-4 font-medium">{title}</h2>
+        <h2 className="mt-4 font-medium text-primary/90">{title}</h2>
       </Link>
     </li>
   );

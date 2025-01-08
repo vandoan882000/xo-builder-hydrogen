@@ -102,8 +102,10 @@ function ArticleCard({
             />
           </div>
         )}
-        <h2 className="mt-4 font-medium">{article.title}</h2>
-        <span className="block mt-1">{article.publishedAt}</span>
+        <h2 className="mt-4 font-medium text-primary/90">{article.title}</h2>
+        <span className="block mt-1 text-primary/50">
+          {article.publishedAt}
+        </span>
       </Link>
     </li>
   );

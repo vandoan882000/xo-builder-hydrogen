@@ -452,7 +452,7 @@ export function CartEmpty({
   return (
     <div ref={scrollRef} className={container[layout]} hidden={hidden}>
       <section className="grid gap-6">
-        <Text format>
+        <Text className="text-primary/90" format>
           Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
           started!
         </Text>

@@ -1,11 +1,7 @@
 import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {LoaderFunctionArgs} from '@remix-run/server-runtime';
 import {defer} from '@remix-run/server-runtime';
-import {
-  Analytics,
-  getSelectedProductOptions,
-  useSelectedOptionInUrlParam,
-} from '@shopify/hydrogen';
+import {Analytics, useSelectedOptionInUrlParam} from '@shopify/hydrogen';
 import {XoBuilder} from '@xotiny/xb-react-elements';
 import invariant from 'tiny-invariant';
 
@@ -87,15 +83,3 @@ export default function Product() {
     </>
   );
 }
-
-const PRODUCT_QUERY = `#graphql
-  query Product(
-    $country: CountryCode
-    $handle: String!
-    $language: LanguageCode
-  ) @inContext(country: $country, language: $language) {
-    product(handle: $handle) {
-      id
-    }
-  }
-` as const;

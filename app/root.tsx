@@ -1,41 +1,41 @@
 import {
-  defer,
-  type LinksFunction,
-  type LoaderFunctionArgs,
-  type AppLoadContext,
-  type MetaArgs,
-} from '@shopify/remix-oxygen';
-import {XoBuilder} from '@xotiny/xb-react-elements';
-import {
   isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useRouteLoaderData,
   useRouteError,
+  useRouteLoaderData,
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
 import {
-  useNonce,
   Analytics,
-  getShopAnalytics,
   getSeoMeta,
+  getShopAnalytics,
+  useNonce,
   type SeoConfig,
 } from '@shopify/hydrogen';
+import {
+  defer,
+  type AppLoadContext,
+  type LinksFunction,
+  type LoaderFunctionArgs,
+  type MetaArgs,
+} from '@shopify/remix-oxygen';
+import {XoBuilder} from '@xotiny/xb-react-elements';
 import invariant from 'tiny-invariant';
 
-import {PageLayout} from '~/components/PageLayout';
+import favicon from '~/assets/favicon.svg';
 import {GenericError} from '~/components/GenericError';
 import {NotFound} from '~/components/NotFound';
-import favicon from '~/assets/favicon.svg';
+import {PageLayout} from '~/components/PageLayout';
 import {seoPayload} from '~/lib/seo.server';
 import '~/styles/app.css';
+import '~/styles/reset.css';
+import '~/styles/xo-builder.base.css';
 import '~/wc/wc.css';
 import wcJs from '~/wc/wc.js?url';
-import '~/styles/xo-builder.base.css';
-import '~/styles/reset.css';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -83,15 +83,10 @@ export async function loader(args: LoaderFunctionArgs) {
 
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-  const rootData = await XoBuilder.loadRootData({
-    isDev: true,
-    shop: env.PUBLIC_STORE_DOMAIN,
-  });
 
   return defer({
     ...deferredData,
     ...criticalData,
-    ...rootData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     shop: getShopAnalytics({
       storefront,
@@ -150,7 +145,6 @@ function Layout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<typeof loader>('root');
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
   // @ts-ignore
-  const cssFromSettings = (data?.css ?? '') as string;
 
   return (
     <XoBuilder.Root>
@@ -168,12 +162,6 @@ function Layout({children}: {children?: React.ReactNode}) {
               shop={data.shop}
               consent={data.consent}
             >
-              {!!cssFromSettings && (
-                <style
-                  dangerouslySetInnerHTML={{__html: cssFromSettings}}
-                  type="text/css"
-                />
-              )}
               <PageLayout
                 key={`${locale.language}-${locale.country}`}
                 {...data}

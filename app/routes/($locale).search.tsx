@@ -93,11 +93,15 @@ export default function Search() {
           <Input
             defaultValue={searchTerm}
             name="q"
+            className="text-primary/90"
             placeholder="Search…"
             type="search"
             variant="search"
           />
-          <button className="absolute right-0 py-2" type="submit">
+          <button
+            className="absolute right-0 py-2 text-primary/90"
+            type="submit"
+          >
             Go
           </button>
         </Form>

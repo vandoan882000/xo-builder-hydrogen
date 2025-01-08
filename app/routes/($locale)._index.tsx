@@ -39,23 +39,12 @@ export const meta: MetaFunction<typeof loader> = (metaData) => {
 export default function Homepage() {
   const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
 
-  const elementList = Object.entries(pageData.entities).map(([key, value]) => {
-    return (value as any)?.elementId
-      .replace(/([-]\w)/g, (g: any) => g[1]!.toUpperCase())
-      .replace(/^(\w)/, (g: any) => g[0]!.toUpperCase());
-  });
-  const pageElements = Array.from(new Set(elementList));
-  const currentElements = Object.fromEntries(
-    Object.entries(elements).filter(([key, value]: any) =>
-      pageElements.includes(key),
-    ),
-  );
-  console.log(pageData, shopifyData, pageElements);
+  console.log(pageData, shopifyData);
 
   return (
     <XoBuilder.Layout
       isDev={process.env.NODE_ENV === 'development'}
-      elements={currentElements}
+      elements={elements}
       page={pageData}
       shopifyData={shopifyData}
       cssContent={cssContent}

@@ -74,12 +74,12 @@ export function ProductCard({
           </div>
           <div className="grid gap-1">
             <Text
-              className="w-full overflow-hidden whitespace-nowrap text-ellipsis "
+              className="w-full overflow-hidden whitespace-nowrap text-ellipsis text-primary/90"
               as="h3"
             >
               {product.title}
             </Text>
-            <div className="flex gap-4">
+            <div className="flex gap-4 text-primary/90">
               <Text className="flex gap-4">
                 <Money withoutTrailingZeros data={price!} />
                 {isDiscounted(price as MoneyV2, compareAtPrice as MoneyV2) && (

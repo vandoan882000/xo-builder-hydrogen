@@ -89,6 +89,7 @@ export function Heading({
     missingClass(className, 'max-w-') && widths[width],
     missingClass(className, 'font-') && sizes[size],
     className,
+    'text-primary/90',
   );
 
   return (
