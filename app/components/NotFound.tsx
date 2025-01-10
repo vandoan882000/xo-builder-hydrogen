@@ -9,7 +9,7 @@ export function NotFound({type = 'page'}: {type?: string}) {
   return (
     <>
       <PageHeader heading={heading}>
-        <Text width="narrow" as="p">
+        <Text width="narrow" as="p" className="text-primary/60">
           {description}
         </Text>
         <Button width="auto" variant="secondary" to={'/'}>
