@@ -27,7 +27,10 @@ export async function loader(args: LoaderFunctionArgs) {
     data: home_default,
   });
 
-  const seo = seoPayload.home({url: request.url});
+  const seo = {
+    ...seoPayload.home({url: request.url}),
+    ...criticalData.metaData,
+  };
 
   return defer({...criticalData, seo});
 }
@@ -37,9 +40,10 @@ export const meta: MetaFunction<typeof loader> = (metaData) => {
 };
 
 export default function Homepage() {
-  const {pageData, shopifyData, cssContent} = useLoaderData<typeof loader>();
+  const {pageData, shopifyData, cssContent, metaData, seo} =
+    useLoaderData<typeof loader>();
 
-  console.log(pageData, shopifyData);
+  console.log(metaData, seo);
 
   return (
     <XoBuilder.Layout

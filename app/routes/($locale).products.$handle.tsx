@@ -29,11 +29,14 @@ export async function loader(args: LoaderFunctionArgs) {
     throw new Response(null, {status: 404});
   }
 
-  const seo = seoPayload.product({
-    product: productDetail,
-    selectedVariant: productDetail.selectedOrFirstAvailableVariant,
-    url: request.url,
-  });
+  const seo = {
+    ...seoPayload.product({
+      product: productDetail,
+      selectedVariant: productDetail.selectedOrFirstAvailableVariant,
+      url: request.url,
+    }),
+    ...criticalData.metaData,
+  };
 
   return defer({...criticalData, seo});
 }

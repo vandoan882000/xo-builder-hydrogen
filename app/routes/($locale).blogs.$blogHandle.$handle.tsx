@@ -28,7 +28,10 @@ export async function loader(args: LoaderFunctionArgs) {
     throw new Response(null, {status: 404});
   }
 
-  const seo = seoPayload.article({article: articleDetail, url: request.url});
+  const seo = {
+    ...seoPayload.article({article: articleDetail, url: request.url}),
+    ...criticalData.metaData,
+  };
 
   return defer({...criticalData, seo});
 }

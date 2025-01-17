@@ -1,6 +1,6 @@
 export const product_default = {
-  category: 'Product Page',
-  label: 'Product Page',
+  category: 'Product',
+  label: 'Product',
   entities: {
     id_m0yzdrzj30wfy: {
       id: 'id_m0yzdrzj30wfy',

@@ -388,13 +388,13 @@ function page({
 }): SeoConfig {
   return {
     description: truncate(page?.seo?.description || ''),
-    title: page?.seo?.title ?? page?.title,
+    title: page?.seo?.title ?? page?.title ?? 'Page',
     titleTemplate: '%s | Page',
     url,
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      name: page.title,
+      name: page?.title ?? 'Page',
     },
   };
 }

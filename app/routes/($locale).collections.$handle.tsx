@@ -33,10 +33,13 @@ export async function loader(args: LoaderFunctionArgs) {
     throw new Response(null, {status: 404});
   }
 
-  const seo = seoPayload.collection({
-    collection: collectionDetail.collection,
-    url: request.url,
-  });
+  const seo = {
+    ...seoPayload.collection({
+      collection: collectionDetail.collection,
+      url: request.url,
+    }),
+    ...criticalData.metaData,
+  };
 
   return defer({...criticalData, seo});
 }

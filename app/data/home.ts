@@ -1,6 +1,6 @@
 export const home_default = {
-  category: 'Home Page',
-  label: 'Home Page',
+  category: 'Home',
+  label: 'Home',
   entities: {
     id_m0xifhap1wmd: {
       id: 'id_m0xifhap1wmd',

@@ -282,4 +282,5 @@ export const page_default = {
   },
   order: ['id_m46ow64n20fm'],
   pageType: 'page',
+  isDefault: true,
 };

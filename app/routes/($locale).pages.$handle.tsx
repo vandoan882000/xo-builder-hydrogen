@@ -23,14 +23,20 @@ export async function loader(args: LoaderFunctionArgs) {
     data: page_default,
   });
 
-  const {shopifyData} = criticalData;
+  const {shopifyData, pageData} = criticalData;
   const {page} = shopifyData;
+  const hasPage = (page && pageData.isDefault) || !pageData.isDefault;
 
-  if (!page) {
+  if (!hasPage) {
     throw new Response(null, {status: 404});
   }
 
-  const seo = seoPayload.page({page, url: request.url});
+  const seo = {
+    ...seoPayload.page({page, url: request.url}),
+    title: pageData.label,
+    titleTemplate: pageData.label,
+    ...criticalData.metaData,
+  };
 
   return defer({...criticalData, seo});
 }
