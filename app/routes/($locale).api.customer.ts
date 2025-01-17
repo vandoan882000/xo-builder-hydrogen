@@ -1,11 +1,12 @@
 import type {
   ActionFunction,
   ActionFunctionArgs,
-} from "@remix-run/server-runtime";
-import { json } from "@remix-run/server-runtime";
-import type { CustomerCreateMutation } from "storefrontapi.generated";
+} from '@remix-run/server-runtime';
+import {json} from '@remix-run/server-runtime';
 
-let CUSTOMER_CREATE = `#graphql
+import type {CustomerCreateMutation} from 'storefrontapi.generated';
+
+const CUSTOMER_CREATE = `#graphql
   mutation customerCreate($input: CustomerCreateInput!) {
     customerCreate(input: $input) {
       customer {
@@ -24,18 +25,18 @@ let CUSTOMER_CREATE = `#graphql
   }
 ` as const;
 
-export let action: ActionFunction = async ({
+export const action: ActionFunction = async ({
   request,
   context,
 }: ActionFunctionArgs) => {
-  let formData = await request.formData();
-  const email = formData.get("contact[email]") as string;
-  const firstName = formData.get("contact[first_name]") as string;
-  const lastName = formData.get("contact[last_name]") as string;
-  const { customerCreate, errors: queryErrors } =
+  const formData = await request.formData();
+  const email = formData.get('contact[email]') ?? ('' as string);
+  const firstName = formData.get('contact[first_name]') ?? ('' as string);
+  const lastName = formData.get('contact[last_name]') ?? ('' as string);
+  const {customerCreate, errors: queryErrors} =
     await context.storefront.mutate<CustomerCreateMutation>(CUSTOMER_CREATE, {
       variables: {
-        input: { email, firstName, lastName, password: "5hopify" },
+        input: {email, firstName, lastName, password: '5hopify'},
       },
     });
 
@@ -46,10 +47,10 @@ export let action: ActionFunction = async ({
     return json(
       {
         errors: queryErrors,
-        errorMessage: "Internal server error!",
+        errorMessage: 'Internal server error!',
         ok: false,
       },
-      { status: 500 },
+      {status: 500},
     );
   }
   if (customerUserErrors?.length) {
@@ -59,25 +60,25 @@ export let action: ActionFunction = async ({
         errorMessage: customerUserErrors?.[0]?.message,
         ok: false,
       },
-      { status: 500 },
+      {status: 500},
     );
   }
   if (customer) {
-    return json({ customer, ok: true }, { status: 201 });
+    return json({customer, ok: true}, {status: 201});
   }
   return json(
     {
-      errorMessage: "Something went wrong! Please try again later.",
+      errorMessage: 'Something went wrong! Please try again later.',
       ok: false,
     },
-    { status: 500 },
+    {status: 500},
   );
 };
 
 export type CustomerApiPlayLoad = {
   ok: boolean;
   customer?:
-    | NonNullable<CustomerCreateMutation["customerCreate"]>["customer"]
+    | NonNullable<CustomerCreateMutation['customerCreate']>['customer']
     | null;
   errors?: any[];
   errorMessage?: string;
